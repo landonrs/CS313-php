@@ -1,0 +1,77 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ <title>Landon Shumway's Personal Page</title>
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="intro.css">
+ </head>
+<body>
+<div id="top-banner">
+<h2>Welcome to Landon Shumway's personal page!</h2>
+</div>
+ <hr />
+ <div class="container-fluid">
+  
+ <div class="card">
+  <img class="card-img-top" src="profile-edit.jpg" alt="Card image">
+  <div class="card-body">
+    <h4 class="card-title">Landon Shumway</h4>
+    <p class="card-text">I am a Software Engineering major and I love programming. Click the button below to open a slideshow of some of my past projects.
+	Each project image links to the corresponding code repo on Github.</p>
+    <a href="#" class="btn btn-primary" data-toggle="collapse" data-target="#projects">See Projects</a>
+  </div>
+</div>
+
+<!--collapsable, shows info when the button is clicked-->
+  <div id="projects" class="carousel slide collapse" data-ride="carousel">
+
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <li data-target="#projects" data-slide-to="0" class="active"></li>
+    <li data-target="#projects" data-slide-to="1"></li>
+    <li data-target="#projects" data-slide-to="2"></li>
+  </ul>
+
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <a href="https://github.com/sai-byui/bot_arena_2.0"><img class="project-img" src="bot_arena.png" alt="Bot Arena"></a>
+	  <div class="carousel-caption">
+    <h3>Bot Arena</h3>
+    <p>A pathfinding project where two rectangles duke it out! How Exciting!</p>
+  </div>
+    </div>
+    <div class="carousel-item">
+      <a href="https://github.com/landonrs/PAMM"><img class="project-img" src="pamm.png" alt="PAMM"></a>
+	  <div class="carousel-caption">
+    <h3 class="pamm-header">The PAMM project</h3>
+    <p class="pamm-header" >A personal assistant macro maker! You teach it how to do tasks on your computer and then use speech recognition to run the commands!</p>
+  </div>
+    </div>
+    <div class="carousel-item">
+      <a href="https://github.com/sai-byui/NEO2D"><img  class="project-img" src="NEO.png" alt="NEO"></a>
+	  <div class="carousel-caption">
+    <h3>NEO the Learning Softbot</h3>
+    <p>A software robot that learns from objects placed in it's environment!</p>
+  </div>
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#projects" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#projects" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+
+</div>
+<a id="link-button" href="../index.html" class="btn btn-primary" role="button">CS313 Assignment link</a><br/>
+  </div>
+ </body>
+ </html>

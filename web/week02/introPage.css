@@ -1,0 +1,21 @@
+#intro { color:white;
+			background-color:black;
+			padding:10px;
+}
+	   
+body{ text-align:center; 
+	  background-image: url("matrix-code.jpg");
+}
+
+ul   {
+	padding-left:0;   
+	list-style-type:katakana;
+	list-style-position:inside;
+	}
+	
+li   {
+	background-color:yellow;
+	border-color:red;
+	border-width:1px;
+	border-style:dotted;
+	}

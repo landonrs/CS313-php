@@ -1,0 +1,47 @@
+.card {
+        width: 400px;
+		margin: 0 auto;
+        float: none;
+        margin-bottom: 10px;
+}
+
+.h2 {
+	font-family: calibri;
+	text-align: center;
+    margin-bottom: 10px;
+	
+}
+
+.project-img {
+	max-height: 500px;
+	width: 100%;
+}
+
+.pamm-header {
+	color: black;
+	font-style: bold;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  background-size: 100%, 100%;
+  background-color: black;
+}
+
+body {
+	background-image: url("grey.jpg");
+}
+
+#top-banner{
+	height: 50px;
+	width: 100%;
+	color: white;
+	background-color: black;
+	text-align: center;
+}
+
+#link-button {
+	display: flex;
+    justify-content: center;
+	margin-top: 20px;
+}
