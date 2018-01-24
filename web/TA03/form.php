@@ -5,7 +5,7 @@
 $radio_buttons = Array('CS' => 'Computer Science', 'SE' => 'Software Engineering', 'CE' => 'Computer Engineering', 'CIT' => 'Computer Info Tech');
 ?>
 </head>
-<form action="http://localhost/TA03/response.php" method="post" id="majorform">
+<form action="https://stark-sierra-64908.herokuapp.com/TA03/response.php" method="post" id="majorform">
   Name: <input name="name" type="text"><br>
   Email: <input name="email" type="text"><br>
   Major:<br>
