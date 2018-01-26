@@ -1,0 +1,33 @@
+.highlighted{
+	color: red;
+}
+
+a #cart_image {
+	position: relative;
+	left: 95%;
+	height: 50px;
+	width: 50px;
+}
+
+#navbar-header {
+	background-color: blue;
+}
+
+h1 {
+	font-family: "impact";
+}
+
+td {
+	font-size:20px;
+	font-weight:bold;
+}
+
+a{
+	font-size: 25px;
+	margin-left: 20px;
+}
+
+img {
+	height: 175px;
+	width: 175px;	
+}
