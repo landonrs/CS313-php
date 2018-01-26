@@ -21,7 +21,8 @@ Continents that you have visited:<br>
 <input name="continent[]" value="au" type="checkbox">Australia<br>
 <input name="continent[]" value="af" type="checkbox">Africa<br>
 <input name="continent[]" value="an" type="checkbox">Antartica<br>
-  <textarea name="comment" form="majorform"></textarea>
+Comments:<br>
+<textarea name="comment" form="majorform"></textarea><br>
 
 
   <input type="submit">Click here</button>
