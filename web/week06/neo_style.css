@@ -1,0 +1,24 @@
+#home_image { 
+
+	width: 50px;
+	height: 50px;
+}
+
+#home_title {
+	color:white;
+	margin-bottom:50px;
+}	   
+body{ text-align:center; 
+	background-image: url("grey.jpg");
+}
+
+.card {
+        margin: 0 auto; /* Added */
+        float: none; /* Added */
+        margin-bottom: 10px; /* Added */
+}
+
+.coming_soon {
+	color:white;
+	margin-top:100px;
+}
