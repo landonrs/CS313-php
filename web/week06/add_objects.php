@@ -24,7 +24,7 @@ else{
 	$dbName = ltrim($dbopts["path"],'/');
 	
 	$db = pg_connect("host=$dbhost port=$dbPort dbname=$dbname user=$dbUser password=$dbPassword")
-		or die ("Could not connect to server\n");
+		or die ("Could not connect to server" . pg_last_error() . "\n");
 	echo "connected to heroku!";
 	/* $db = new PDO("pgsql:host=$dbHost;port=$dbPort;dbname=$dbName", $dbUser, $dbPassword);
 	$message = "successfully connected on heroku!"; */
