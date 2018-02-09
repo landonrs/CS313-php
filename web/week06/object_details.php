@@ -4,6 +4,11 @@ session_start();
 $dbUrl = getenv('DATABASE_URL');
 $message = "";
 $db = Null;
+$object_name = $_GET['name'];
+
+$dbUrl = getenv('DATABASE_URL');
+$message = "";
+$db = Null;
 
 if (empty($dbUrl)) {
 	try
@@ -35,10 +40,7 @@ else{
 	$message = "successfully connected on heroku!";
 }
 $db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-
-
 ?>
-
 <html>
 <head>
 <meta charset="utf-8">
@@ -53,17 +55,22 @@ $db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 <?php
 include('navbar.php');
 ?>
-<h2 class="coming_soon">Current Object Library:</h2>
+<img class="object_image" src="object_images\\<?php echo $object_name; ?>.jpg">
+<h2 class="coming_soon"><?php echo $object_name; ?></h2>
 <div style="overflow:auto;">
 <table class="table table-light">
     <tbody>
+	
 		<?php 
 		try{
-			$statement = $db->query('SELECT object_name, object_image from objects');
+			$statement = $db->prepare('SELECT ATTRIBUTE_NAME, ATTRIBUTE_VALUE 
+									FROM OBJECT_DESCRIPTION OD JOIN ATTRIBUTES a on OD.ATTRIBUTE_ID = a.ATTRIBUTE_ID
+									WHERE OD.OBJECT_ID = (SELECT OBJECT_ID FROM OBJECTS WHERE OBJECT_NAME =:name)');
+			$statement->bindValue(':name', $object_name, PDO::PARAM_STR);
+			$statement->execute();
 			while ($row = $statement->fetch(PDO::FETCH_ASSOC))
 			{
-			  echo '<tr><td>Object Name: ' . $row['object_name'] . '</td><td>Object Image:<img src="object_images\\' . $row['object_name'] . '.jpg"></td>';
-			  echo "<td><form action='object_details.php' method='get'><input type='hidden' name='name' value='".$row['object_name']."'><input type='submit' value='See object details'></td></form></tr>";
+			  echo '<tr><td>Object ' .  $row['attribute_name'] . ': ' . $row['attribute_value'] . '</td></tr><br/>';
 			}
 		}catch (PDOException $ex)
 		{
