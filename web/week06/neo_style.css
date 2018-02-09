@@ -28,3 +28,16 @@ body{ text-align:center;
 	width: 300px;
 	height: 300px;
 }
+
+.library-title{
+	float:left;
+}
+
+.search-bar {
+	float: left;
+	margin-left: 75%;
+}
+
+.clear{
+    clear:both
+}

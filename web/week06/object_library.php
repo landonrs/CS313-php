@@ -4,6 +4,9 @@ session_start();
 $dbUrl = getenv('DATABASE_URL');
 $message = "";
 $db = Null;
+if($_REQUEST["search"] !== null){
+$search_object = $_REQUEST['search'];
+}
 
 if (empty($dbUrl)) {
 	try
@@ -53,11 +56,14 @@ $db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 <?php
 include('navbar.php');
 ?>
-<h2 class="coming_soon">Current Object Library:</h2>
-<div style="overflow:auto;">
+<div class="library-title"><h2 class="coming_soon">Current Object Library:</h2></div>
+<div class="search-bar"><form id="lookup" action="object_library.php" method="post">
+   <input type="text" name="search" form="lookup"><input type="submit" value="search"></form></div>
+<div class="clear" style="overflow:auto;">
 <table class="table table-light">
     <tbody>
 		<?php 
+		if($search_object == Null){
 		try{
 			$statement = $db->query('SELECT object_name, object_image from objects');
 			while ($row = $statement->fetch(PDO::FETCH_ASSOC))
@@ -69,6 +75,29 @@ include('navbar.php');
 		{
 		  echo 'Error!: ' . $ex->getMessage();
 		  die();
+		}
+		}
+		else{
+			try{
+			$statement = $db->prepare('SELECT object_name, object_image from objects where object_name =:name');
+			$statement->bindValue(':name', $search_object, PDO::PARAM_STR);
+			$statement->execute();
+			if($statement->rowCount() > 0){
+				while ($row = $statement->fetch(PDO::FETCH_ASSOC))
+				{
+				  echo '<tr><td>Object Name: ' . $row['object_name'] . '</td><td>Object Image:<img src="object_images\\' . $row['object_name'] . '.jpg"></td>';
+				  echo "<td><form action='object_details.php' method='get'><input type='hidden' name='name' value='".$row['object_name']."'><input type='submit' value='See object details'></td></form></tr>";
+				}
+			}
+			else{
+				echo "<h1 style='color:white;'>No object names matched your search.</h1>";
+			}
+		}catch (PDOException $ex)
+		{
+		  echo 'Error!: ' . $ex->getMessage();
+		  die();
+		}
+			
 		}
 		
 		?>
