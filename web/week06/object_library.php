@@ -35,20 +35,9 @@ else{
 	$db = new PDO("pgsql:host=$dbHost;port=$dbPort;dbname=$dbName", $dbUser, $dbPassword);
 	$message = "successfully connected on heroku!";
 }
+$db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
 
-/* $statement = $db->query('SELECT username, password FROM note_user');
-while ($row = $statement->fetch(PDO::FETCH_ASSOC))
-{
-  echo 'user: ' . $row['username'] . ' password: ' . $row['password'] . '<br/>';
-}
-
-foreach ($db->query('SELECT object FROM note_user') as $row)
-{
-  echo 'user: ' . $row['username'];
-  echo ' password: ' . $row['password'];
-  echo '<br/>';
-} */
 ?>
 
 <html>
@@ -74,7 +63,7 @@ include('navbar.php');
 			$statement = $db->query('SELECT object_name, object_image from objects');
 			while ($row = $statement->fetch(PDO::FETCH_ASSOC))
 			{
-			  echo '<tr><td>Object Name: ' . $row['object_name'] . '</td><td>Object Image:<img src=getImage.php?id='. $row['object_image'] . '></td></tr><br/>';
+			  echo '<tr><td>Object Name: ' . $row['object_name'] . '</td><td>Object Image:<img src="object_images\\' . $row['object_name'] . '.jpg"></td></tr><br/>';
 			}
 		}catch (PDOException $ex)
 		{
