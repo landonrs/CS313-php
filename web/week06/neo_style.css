@@ -38,6 +38,11 @@ body{ text-align:center;
 	margin-left: 75%;
 }
 
+.category-bar {
+		float: left;
+		margin-left: 75%;
+}
+
 .clear{
     clear:both
 }
