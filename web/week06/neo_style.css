@@ -39,8 +39,9 @@ body{ text-align:center;
 }
 
 .category-bar {
-		float: left;
-		margin-left: 75%;
+	position: relative;
+	margin-top: 100px;
+	margin-left: 72%;
 }
 
 .clear{
