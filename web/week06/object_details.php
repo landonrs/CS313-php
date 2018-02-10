@@ -14,8 +14,8 @@ if (empty($dbUrl)) {
 	try
 	{
 		$host = "localhost";
-		$user = 'postgres';
-		$password = 'root';
+		$user = 'fake-user';
+		$password = 'fake-password';
 		$db = new PDO('pgsql:host=localhost;dbname=neo', $user, $password);
 		$db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 	}
