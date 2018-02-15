@@ -23,6 +23,11 @@ body{ text-align:center;
 	margin-top:50px;
 }
 
+.col-centered {
+	margin: 0 auto;
+    float: none;
+}
+
 .object_image{
 	margin-top: 50px;
 	width: 300px;
@@ -31,6 +36,11 @@ body{ text-align:center;
 
 .library-title{
 	float:left;
+}
+
+.library-image{
+	width: 175px;
+	height: 175px;
 }
 
 .search-bar {

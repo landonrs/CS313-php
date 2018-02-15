@@ -21,8 +21,8 @@ if (empty($dbUrl)) {
 	try
 	{
 		$host = "localhost";
-		$user = 'fake-user';
-		$password = 'fake-password';
+		$user = 'postgres';
+		$password = 'root';
 		$db = new PDO('pgsql:host=localhost;dbname=neo', $user, $password);
 		$db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 	}
@@ -67,7 +67,7 @@ include('navbar.php');
 ?>
 <div class="library-title"><h2 class="coming_soon">Current Object Library:</h2></div>
 <div class="search-bar"><form id="lookup" action="object_library.php" method="post">
-   <input type="text" name="search" form="lookup"><input type="submit" value="search by name"></form></div>
+   <input type="text" name="search" form="lookup"><input type="submit" value="search by name"></form></div><br>
 <div class='category-bar'><form id="c-search" action="object_library.php" method="get">
    <select name="category" form="c-search">
 		<option value="all">all</option>
@@ -87,7 +87,7 @@ include('navbar.php');
 		
 		if($search_category != Null){
 			try{
-			$statement = $db->prepare('SELECT OBJECT_NAME FROM OBJECTS O JOIN OBJECT_CATEGORIES OC ON O.OBJECT_ID = OC.OBJECT_ID 
+			$statement = $db->prepare('SELECT DISTINCT O.OBJECT_ID, OBJECT_NAME, OBJECT_IMAGE FROM OBJECTS O JOIN OBJECT_CATEGORIES OC ON O.OBJECT_ID = OC.OBJECT_ID 
 										JOIN CATEGORIES C ON C.CATEGORY_ID = OC.CATEGORY_ID
 										WHERE C.CATEGORY_NAME =:name');
 			$statement->bindValue(':name', $search_category, PDO::PARAM_STR);
@@ -95,8 +95,9 @@ include('navbar.php');
 			if($statement->rowCount() > 0){
 				while ($row = $statement->fetch(PDO::FETCH_ASSOC))
 				{
-				  echo '<tr><td>Object Name: ' . $row['object_name'] . '</td><td>Object Image:<img src="object_images\\' . $row['object_name'] . '.jpg"></td>';
-				  echo "<td><form action='object_details.php' method='get'><input type='hidden' name='name' value='".$row['object_name']."'><input type='submit' value='See object details'></td></form></tr>";
+				  echo '<tr><td>Object Name: ' . $row['object_name'] . '</td><td>Object Image:<img class="library-image" src="' . $row['object_image'] . '"></td>';
+				  echo "<td><form action='object_details.php' method='get'><input type='hidden' name='name' value='".$row['object_name']."'>
+				  <input type='hidden' name='id' value='".$row['object_id']."'><input type='submit' value='See object details'></td></form></tr>";
 				}
 			}
 			else{
@@ -111,14 +112,16 @@ include('navbar.php');
 		}
 		else if($search_object != Null){
 			try{
-			$statement = $db->prepare('SELECT object_name, object_image from objects where object_name =:name');
-			$statement->bindValue(':name', $search_object, PDO::PARAM_STR);
+			$statement = $db->prepare('SELECT object_id, object_name, object_image from objects where object_name LIKE :keyword');
+			$keyword = "%".$search_object."%";
+			$statement->bindValue(':keyword', $keyword, PDO::PARAM_STR);
 			$statement->execute();
 			if($statement->rowCount() > 0){
 				while ($row = $statement->fetch(PDO::FETCH_ASSOC))
 				{
-				  echo '<tr><td>Object Name: ' . $row['object_name'] . '</td><td>Object Image:<img src="object_images\\' . $row['object_name'] . '.jpg"></td>';
-				  echo "<td><form action='object_details.php' method='get'><input type='hidden' name='name' value='".$row['object_name']."'><input type='submit' value='See object details'></td></form></tr>";
+				  echo '<tr><td>Object Name: ' . $row['object_name'] . '</td><td>Object Image:<img class="library-image" src="' . $row['object_image'] . '"></td>';
+				  echo "<td><form action='object_details.php' method='get'><input type='hidden' name='name' value='".$row['object_name']."'>
+				  <input type='hidden' name='id' value='".$row['object_id']."'><input type='submit' value='See object details'></td></form></tr>";
 				}
 			}
 			else{
@@ -132,11 +135,12 @@ include('navbar.php');
 		}
 		else{
 		try{
-			$statement = $db->query('SELECT object_name, object_image from objects');
+			$statement = $db->query('SELECT object_id, object_name, object_image from objects');
 			while ($row = $statement->fetch(PDO::FETCH_ASSOC))
 			{
-			  echo '<tr><td>Object Name: ' . $row['object_name'] . '</td><td>Object Image:<img src="object_images\\' . $row['object_name'] . '.jpg"></td>';
-			  echo "<td><form action='object_details.php' method='get'><input type='hidden' name='name' value='".$row['object_name']."'><input type='submit' value='See object details'></td></form></tr>";
+			  echo '<tr><td>Object Name: ' . $row['object_name'] . '</td><td>Object Image:<img class="library-image" src="' . $row['object_image'] . '"></td>';
+				  echo "<td><form action='object_details.php' method='get'><input type='hidden' name='name' value='".$row['object_name']."'>
+				  <input type='hidden' name='id' value='".$row['object_id']."'><input type='submit' value='See object details'></td></form></tr>";
 			}
 		}catch (PDOException $ex)
 		{

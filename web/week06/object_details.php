@@ -5,6 +5,7 @@ $dbUrl = getenv('DATABASE_URL');
 $message = "";
 $db = Null;
 $object_name = $_GET['name'];
+$object_id = $_GET['id'];
 
 $dbUrl = getenv('DATABASE_URL');
 $message = "";
@@ -14,8 +15,8 @@ if (empty($dbUrl)) {
 	try
 	{
 		$host = "localhost";
-		$user = 'fake-user';
-		$password = 'fake-password';
+		$user = 'postgres';
+		$password = 'root';
 		$db = new PDO('pgsql:host=localhost;dbname=neo', $user, $password);
 		$db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 	}
@@ -54,8 +55,12 @@ $db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 <body>
 <?php
 include('navbar.php');
+$statement = $db->prepare('SELECT OBJECT_IMAGE FROM OBJECTS WHERE OBJECT_ID = :id');
+$statement->bindValue(':id', $object_id, PDO::PARAM_INT);
+$statement->execute();
+$object_image = $statement->fetch(PDO::FETCH_ASSOC);
 ?>
-<img class="object_image" src="object_images\\<?php echo $object_name; ?>.jpg">
+<img class="object_image" src="<?php echo $object_image['object_image']; ?>">
 <h2 class="coming_soon"><?php echo $object_name; ?></h2>
 <div style="overflow:auto;">
 <table class="table table-light">
