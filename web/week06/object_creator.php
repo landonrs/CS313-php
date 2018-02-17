@@ -36,12 +36,14 @@ include('navbar.php');
   ?>
   <div class="form-group">
 	<div class="col-lg-4 col-centered">
-		<h4>Upload an image for this object</h4>
-		<input type="file"  name="fileToUpload" id="fileToUpload"><br>
+		<h4>Enter an image URL for this object</h4>
+		<input type="text"  class="form-control" name="fileToUpload" id="fileToUpload"><br>
 	</div>
-	<?php if($_SESSION['upload_error']){
-		  echo "<h3 style='color:red'>Please upload a valid image for this object</h3>";
-	  } ?>
+	<?php 
+  if($_SESSION['url_error']){
+	  echo "<h3 style='color:red'>Please enter a valid url for the object image</h3>";
+  } 
+  ?>
   </div>
   <?php
 	foreach ($db->query('SELECT ATTRIBUTE_NAME FROM ATTRIBUTES') as $row)

@@ -22,50 +22,17 @@ foreach ($db->query('SELECT ATTRIBUTE_NAME FROM ATTRIBUTES') as $row)
 			$attributes[$row['attribute_name']] = strtolower(htmlspecialchars($_POST[$row['attribute_name']]));
 		}
 	}
-if(!file_exists($_FILES['fileToUpload']['tmp_name']) || !is_uploaded_file($_FILES['fileToUpload']['tmp_name'])) {
-    // echo 'No upload';
-	$_SESSION['upload_error'] = true;
+
+$image_url = htmlspecialchars($_POST['fileToUpload']);
+if(!isset($_POST['fileToUpload']) || strlen(trim($_POST['fileToUpload'])) == 0){
+	// echo 'No name';
+	$_SESSION['url_error'] = true;
 	header("Location: object_creator.php");
 	die();
 }
 
-$target_dir = "object_images\\";
-$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-$uploadOk = 1;
-$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
 $statement = $db->query('SELECT (last_value + 1) from objects_object_id_seq');
 $fileId = $statement->fetch(PDO::FETCH_NUM);
-//echo $fileId[0];
-$newFileName = $target_dir . $object_name . $fileId[0] .'.' . $imageFileType;
-
-// Check if image file is a actual image or non image file
-if(isset($_POST["submit"])) {
-    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-    if($check !== false) {
-        $uploadOk = 1;
-    } else {
-        // echo "File is not an image.";
-        $uploadOk = 0;
-		$_SESSION['upload_error'] = true;
-		header("Location: object_creator.php");
-		die();
-    }
-}
-
-
-if ($uploadOk == 0) {
-    echo "Sorry, your file was not uploaded.";
-} else {
-    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $newFileName)) {
-        echo "The file has been uploaded.";
-    } else {
-        echo "Sorry, there was an error uploading your file.";
-		$_SESSION['upload_error'] = true;
-		header("Location: object_creator.php");
-		die();
-    }
-}
 
 try{
 	$statement = $db->prepare('INSERT INTO OBJECTS(OBJECT_NAME, OBJECT_IMAGE) VALUES
@@ -74,7 +41,7 @@ try{
 							:file_name
 							)');
 	$statement->bindValue(':name', $object_name, PDO::PARAM_STR);
-	$statement->bindValue(':file_name', $newFileName, PDO::PARAM_STR);
+	$statement->bindValue(':file_name', $image_url, PDO::PARAM_STR);
 	$statement->execute();
 	foreach ($attributes as $key => $value) {
 		echo $key . ': ' . $value .'<br>';
