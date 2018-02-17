@@ -24,7 +24,7 @@ include('navbar.php');
 	</p>
 	<h4 class="card-title" style="font-size:40px;">How to use this website</h4>
 	<p class="card-text" style="font-size:25px;text-align:justify;">This site can be used to create objects to insert into NEO's environment. 
-	It can also be used to add information about the attributes of objects(density, height, color, etc.) so the objects we create can have more detail for NEO
+	It can also be used to add categorical information about the objects so the objects we create can have more detail for NEO
 	to make connections with. Finally you can view the list of objects that have already been added to the database and view the details of each object.
 	</p>
     <a href="https://github.com/sai-byui/NEO2D" class="btn btn-primary">See Neo's repository on GitHub</a>

@@ -72,7 +72,7 @@ include('navbar.php');
    <select name="category" form="c-search">
 		<option value="all">all</option>
 				<?php
-				foreach ($db->query('SELECT CATEGORY_NAME FROM CATEGORIES') as $row)
+				foreach ($db->query('SELECT CATEGORY_NAME FROM CATEGORIES ORDER BY CATEGORY_NAME') as $row)
 				{
 				  echo '<option value="' . $row['category_name'] . '"> ' . $row['category_name'] . ' </option>';
 				}

@@ -1,4 +1,11 @@
 <?php
+session_start(); 
+if ($_SESSION['logged_in'] == true) {
+   // logged in
+ } else {
+   $_SESSION['user'] = null;
+   header("Location: login.php");
+ }
 require("db_connection.php");
 $db = connect_to_db();
 
@@ -22,11 +29,19 @@ include('navbar.php');
 		<input type="text" class="form-control" id="object_title" name="object_name">
 	</div>
   </div>
+  <?php 
+  if($_SESSION['name_error']){
+	  echo "<h3 style='color:red'>Please enter a valid name for the object</h3>";
+  } 
+  ?>
   <div class="form-group">
 	<div class="col-lg-4 col-centered">
 		<h4>Upload an image for this object</h4>
 		<input type="file"  name="fileToUpload" id="fileToUpload"><br>
 	</div>
+	<?php if($_SESSION['upload_error']){
+		  echo "<h3 style='color:red'>Please upload a valid image for this object</h3>";
+	  } ?>
   </div>
   <?php
 	foreach ($db->query('SELECT ATTRIBUTE_NAME FROM ATTRIBUTES') as $row)

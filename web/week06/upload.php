@@ -1,15 +1,34 @@
 <?php
+session_start();
 require("db_connection.php");
 $db = connect_to_db();
 
 $attributes = array();
-$object_name = $_POST['object_name'];
-$object_category = $_POST['category'];
+$object_name = strtolower(htmlspecialchars($_POST['object_name']));
+if(!isset($_POST['object_name']) || strlen(trim($_POST['object_name'])) == 0){
+	// echo 'No name';
+	$_SESSION['name_error'] = true;
+	header("Location: object_creator.php");
+	die();
+}
+$object_category = strtolower(htmlspecialchars($_POST['category']));
 foreach ($db->query('SELECT ATTRIBUTE_NAME FROM ATTRIBUTES') as $row)
 	{
-	  $attributes[$row['attribute_name']] = $_POST[$row['attribute_name']];
-	  // echo  $attributes[$row['attribute_name']] . '<br>';
+		// if the user did not enter a value for any attribute, replace value with unknown
+		if(!isset($_POST[$row['attribute_name']]) || strlen(trim($_POST[$row['attribute_name']])) == 0){
+			$attributes[$row['attribute_name']] = 'unknown';
+		}
+		else{
+			$attributes[$row['attribute_name']] = strtolower(htmlspecialchars($_POST[$row['attribute_name']]));
+		}
 	}
+if(!file_exists($_FILES['fileToUpload']['tmp_name']) || !is_uploaded_file($_FILES['fileToUpload']['tmp_name'])) {
+    // echo 'No upload';
+	$_SESSION['upload_error'] = true;
+	header("Location: object_creator.php");
+	die();
+}
+
 $target_dir = "object_images\\";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
@@ -19,7 +38,35 @@ $statement = $db->query('SELECT (last_value + 1) from objects_object_id_seq');
 $fileId = $statement->fetch(PDO::FETCH_NUM);
 //echo $fileId[0];
 $newFileName = $target_dir . $object_name . $fileId[0] .'.' . $imageFileType;
-// echo $newFileName;
+
+// Check if image file is a actual image or non image file
+if(isset($_POST["submit"])) {
+    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+    if($check !== false) {
+        $uploadOk = 1;
+    } else {
+        // echo "File is not an image.";
+        $uploadOk = 0;
+		$_SESSION['upload_error'] = true;
+		header("Location: object_creator.php");
+		die();
+    }
+}
+
+
+if ($uploadOk == 0) {
+    echo "Sorry, your file was not uploaded.";
+} else {
+    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $newFileName)) {
+        echo "The file has been uploaded.";
+    } else {
+        echo "Sorry, there was an error uploading your file.";
+		$_SESSION['upload_error'] = true;
+		header("Location: object_creator.php");
+		die();
+    }
+}
+
 try{
 	$statement = $db->prepare('INSERT INTO OBJECTS(OBJECT_NAME, OBJECT_IMAGE) VALUES
 							(
@@ -62,30 +109,11 @@ catch (PDOException $ex)
 
 
 
-// Check if image file is a actual image or fake image
-if(isset($_POST["submit"])) {
-    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-    if($check !== false) {
-        // echo "File is an image - " . $check["mime"] . ".";
-        $uploadOk = 1;
-    } else {
-        // echo "File is not an image.";
-        $uploadOk = 0;
-    }
-}
 
-// Check if $uploadOk is set to 0 by an error
-if ($uploadOk == 0) {
-    echo "Sorry, your file was not uploaded.";
-// if everything is ok, try to upload file
-} else {
-    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $newFileName)) {
-        echo "The file has been uploaded.";
-    } else {
-        echo "Sorry, there was an error uploading your file.";
-    }
-}
 $redirect_name = 'object_details.php?name='.$object_name.'&id='.$fileId[0].'';
+// set all error messages to false
+$_SESSION['name_error'] = false;
+$_SESSION['upload_error'] = false;
 header("Location: $redirect_name");
 
 die();

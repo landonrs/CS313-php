@@ -28,7 +28,7 @@ header("Pragma: no-cache");
     <a class="nav-link active" href="object_creator.php">Create Objects for Neo's Environment</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="attribute_creator.php">Teach Neo About Attributes</a>
+    <a class="nav-link active" href="category_creator.php">Teach Neo About Categories</a>
   </li>
   <li class="nav-item">
     <a class="nav-link active" href="object_library.php">View Object Library</a>
