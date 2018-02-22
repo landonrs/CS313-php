@@ -38,9 +38,6 @@ body{ text-align:center;
 	float:left;
 }
 
-.download_button{
-	margin-top:100px;margin-left:50%;
-}
 
 .library-image{
 	width: 175px;
@@ -56,6 +53,12 @@ body{ text-align:center;
 	position: relative;
 	margin-top: 100px;
 	margin-left: 72%;
+}
+
+.download-button{
+	position: relative;
+	margin-left: 72%;
+	
 }
 
 .clear{
