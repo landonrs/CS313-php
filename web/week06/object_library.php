@@ -90,7 +90,7 @@ include('navbar.php');
 </form></div>
 <div class='download-button'>
 <form id="download-form" action="download_library.php" method="post">
-<input type="submit" class="btn btn-success" style="margin-bottom:50px;" value="Download Library as CSV file">
+<input type="submit" class="btn btn-success" value="Download Library as CSV file">
 </form></div>
 <div class="clear" style="overflow:auto;">
 <table class="table table-light">
