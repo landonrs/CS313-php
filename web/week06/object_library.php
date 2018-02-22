@@ -88,9 +88,10 @@ include('navbar.php');
 		   </select>
    <input type="submit" value="or search objects by category">
 </form></div>
+<div class='download-button'>
 <form id="download-form" action="download_library.php" method="post">
-<input type="submit" class="btn btn-success download_button" style="margin-bottom:50px;" value="Download Library as CSV file">
-</form>
+<input type="submit" class="btn btn-success" style="margin-bottom:50px;" value="Download Library as CSV file">
+</form></div>
 <div class="clear" style="overflow:auto;">
 <table class="table table-light">
     <tbody>
