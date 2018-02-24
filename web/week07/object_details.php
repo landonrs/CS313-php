@@ -1,11 +1,15 @@
 <?php
 session_start();
 
+
+
 $dbUrl = getenv('DATABASE_URL');
 $message = "";
 $db = Null;
 $object_name = $_GET['name'];
 $object_id = $_GET['id'];
+
+$_SESSION['prev_page'] = 'object_details.php?name=' . $object_name .'&id=' . $object_id;
 
 $dbUrl = getenv('DATABASE_URL');
 $message = "";
@@ -75,7 +79,9 @@ $object_image = $statement->fetch(PDO::FETCH_ASSOC);
 			$statement->execute();
 			while ($row = $statement->fetch(PDO::FETCH_ASSOC))
 			{
-			  echo '<tr><td>Object ' .  $row['attribute_name'] . ': ' . $row['attribute_value'] . '</td></tr><br/>';
+			  echo '<tr><td>Object ' .  $row['attribute_name'] . ': ' . $row['attribute_value'] . '</td>';
+			  echo "<td><form action='update_attribute.php' method='post'><input type='hidden' name='name' value='".$row['attribute_name']."'>
+			  <input type='hidden' name='id' value='".$object_id."'><input type='text' name='new_attribute'><input type='submit' value='update attribute'></td></form></tr><br/>";
 			}
 		}catch (PDOException $ex)
 		{
